@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+name: TeX Compile and Notify to Teams
+
+# Controls when the workflow will run
+on:
+  push:
+    paths:
+      - 'tex/**' # texフォルダ配下のファイルに変更があった場合に実行
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up LaTeX
+        uses: xu-cheng/latex-action@v2
+        with:
+          root: tex  # 作業ディレクトリを指定
+          recipe: pdflatex
+      - name: Move PDF to pdf folder
+        run: |
+          mkdir -p pdf
+          mv *.pdf pdf/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: pdf
+      - name: Generate end file
+        run: |
+          touch end.txt  # endファイルを作成
