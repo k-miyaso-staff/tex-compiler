@@ -13,19 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up LaTeX
-        uses: xu-cheng/latex-action@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
         with:
-          root: tex  # 作業ディレクトリを指定
-          recipe: pdflatex
-      - name: Move PDF to pdf folder
-        run: |
-          mkdir -p pdf
-          mv *.pdf pdf/
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+          root_file: tex/**
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v4
         with:
-          path: pdf
+          name: PDF
+          path: pdf/main.pdf
       - name: Generate end file
         run: |
           touch end.txt  # endファイルを作成
