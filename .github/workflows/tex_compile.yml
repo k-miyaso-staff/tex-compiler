@@ -16,12 +16,13 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: tex/**
+          root_file: .tex
+          working_directory: tex/
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
           name: PDF
-          path: pdf/main.pdf
+          path: pdf/*.pdf
       - name: Generate end file
         run: |
           touch end.txt  # endファイルを作成
